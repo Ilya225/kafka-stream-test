@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "com.commercehub.gradle.plugin.avro" version "0.9.1"
+}
+
+application {
+    mainClassName = 'stream.test.App'
+}
+
+version '1.0-SNAPSHOT'
+
+final kafkaVersion = "5.4.1-ccs"
+final confluentVersion = "5.4.1"
+
+group 'stream.test'
+subprojects {
+    version '1.0-SNAPSHOT'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url "http://packages.confluent.io/maven/"
+        }
+    }
+
+    dependencies {
+        apply plugin: 'java'
+
+        compile 'org.apache.avro:avro:1.9.2'
+        compile group: 'io.confluent', name: 'kafka-avro-serializer', version: "$confluentVersion"
+        compile group: 'io.confluent', name: 'kafka-streams-avro-serde', version: "$confluentVersion"
+    }
+}
+
+
+def generateAvro = tasks.register("generateAvro", com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
+    source("src/main/resources/avro")
+    outputDir = file("src/main/avro/")
+}
+
+tasks.named("compileJava").configure {
+    source(generateAvro)
+}
+
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.apache.kafka', name: 'kafka-streams-test-utils', version: "$kafkaVersion"
+    compile group: 'org.apache.kafka', name: 'kafka_2.12', version: "$kafkaVersion"
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+    compile group: 'org.apache.kafka', name: 'kafka-streams', version: "$kafkaVersion"
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: "$kafkaVersion"
+
+
+}

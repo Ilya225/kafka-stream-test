@@ -1,0 +1,9 @@
+{"namespace": "message",
+ "type": "record",
+ "name": "TSensorData",
+ "fields": [
+     {"name": "measurement_time", "type": "long"},
+     {"name": "device_id",  "type": "string"},
+     {"name": "temperature", "type": ["double", "null"]}
+ ]
+}

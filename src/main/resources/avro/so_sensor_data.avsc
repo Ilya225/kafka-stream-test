@@ -1,0 +1,12 @@
+{"namespace": "message",
+ "type": "record",
+ "name": "SOSensorData",
+ "fields": [
+     {"name": "p_measurement_time", "type": ["long", "null"]},
+     {"name": "t_measurement_time", "type": ["long", "null"]},
+     {"name": "device_id",  "type": "string"},
+     {"name": "latitude", "type": ["double", "null"]},
+     {"name": "longitude", "type": ["double", "null"]},
+     {"name": "temperature", "type": ["double", "null"]}
+ ]
+}

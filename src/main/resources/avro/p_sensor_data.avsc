@@ -1,0 +1,10 @@
+{"namespace": "message",
+ "type": "record",
+ "name": "PSensorData",
+ "fields": [
+     {"name": "measurement_time", "type": "long"},
+     {"name": "device_id",  "type": "string"},
+     {"name": "latitude", "type": ["double", "null"]},
+     {"name": "longitude", "type": ["double", "null"]}
+ ]
+}
